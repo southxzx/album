@@ -37,7 +37,38 @@ app.post('/api/users/register',(req,res) => {
         })
     })
 
-})
+});
+
+// app.get('/api/users/test',(req,res) => {
+//     return res.status(200).json({
+//         dm: true
+//     })
+// })
+
+app.post('/api/users/login',(req,res) => {   
+
+    // Find the eamil
+    User.findOne({'email':req.body.email},(err,user) => {
+        if (!user) return res.json({loginSuccess:false,message:'Auth failed, Email not found'});
+
+        // Check the password
+        user.comparePassword(req.body.password,(err,isMatch) => {
+            if (!isMatch) return res.json({loginSuccess:false,message:'Wrong password'});
+
+            // If true => Generate a token
+            user.generateToken((err,user) => {
+                if (err) return res.status(400).send(err);
+                res.cookie('w_auth',user.token).status(200).json({
+                    loginSuccess: true
+                })
+            })
+
+        })
+    }) 
+
+});
+
+
 
 const port = process.env.port || 3002;
 
