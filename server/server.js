@@ -21,15 +21,41 @@ app.use(cookieParser());
 
 //MODELS
 const { User } = require('./models/user');
+const { Genre } = require('./models/genre');
+
 const { response } = require('express');
 
 //Middleware
-const auth = require('./middleware/auth')
+const auth = require('./middleware/auth');
+const admin = require('./middleware/admin');
+
+/*----------------------------- USER--------------------------- */
+
+// Thêm Genre
+app.post('/api/product/genre',auth,admin,(req,res) => {
+    const genre = new Genre(req.body);
+
+    genre.save((err,doc) => {
+        if (err) return res.json({success:false,err});
+        res.status(200).json({
+            success: true,
+            genre: doc
+        })
+    })
+})
+
+// Xem Genres
+app.get('/api/product/genres',(req,res) => {
+    Genre.find({},(err,genres) => {
+        if (err) return res.status(400).send(err);
+        res.status(200).send(genres);
+    })
+})
 
 /*----------------------------- USER--------------------------- */
 
 
-
+// Đăng ký
 app.post('/api/users/register',async (req,res) => {
 
     const user = new User(req.body);
@@ -43,6 +69,21 @@ app.post('/api/users/register',async (req,res) => {
 
 });
 
+// Logout
+app.get('/api/user/logout',auth,(req,res) => {
+    User.findOneAndUpdate(
+        {_id: req.user._id},
+        {token: ''},
+        (err,doc) => {
+            if (err) return res.json({success:false,err});
+            return res.status(200).send({
+                success: true
+            })
+        }
+    )
+})
+
+// Route authentication
 app.get('/api/users/auth',auth, async (req,res) => {
     res.status(200).json({
         isAdmin : req.user.role === 0 ? false : true,
@@ -56,7 +97,7 @@ app.get('/api/users/auth',auth, async (req,res) => {
     })
 });
 
-
+// Đăng nhập
 app.post('/api/users/login',(req,res) => {   
 
     // Find the eamil
