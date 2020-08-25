@@ -1,0 +1,1 @@
+npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome @material-ui/core axios react-image react-redux react-router-dom react-slick redux redux-promise redux-thunk react-dropzone react-moment react-paypal-express-checkout
