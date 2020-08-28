@@ -27,7 +27,6 @@ export const update = (element, formdata, formname) => {
     const newElement = {
         ...formdata[element.id]
     }
-    console.log(newFormdata);
 
     newElement.value = element.event.target.value;
 
@@ -41,5 +40,29 @@ export const update = (element, formdata, formname) => {
     newFormdata[element.id] = newElement;
 
     return newFormdata;
+
+}
+
+// Generate data
+export const generateData =  (formdata, formname) => {
+    let dataToSubmit = {};
+
+    for (let key in formdata){
+        dataToSubmit[key] = formdata[key].value;
+    }
+
+    return dataToSubmit;
+}
+
+// Check the form is valid or not
+export const isFormValid = (formdata, formname) => {
+
+    let formIsValid = true;
+
+    for (let key in formdata){
+        formIsValid = formdata[key].valid && formIsValid;
+    }
+
+    return formIsValid;
 
 }
