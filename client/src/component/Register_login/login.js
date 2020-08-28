@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormField from '../utils/Form/formfield';
+import { update } from '../utils/Form/formActions';
 
 class Login extends Component {
 
@@ -28,12 +29,13 @@ class Login extends Component {
                 element: 'input',
                 value: '',
                 config: {
-                    name: 'email_input',
-                    type: 'email',
-                    placeholder: 'Please enter your email'
+                    name: 'password_input',
+                    type: 'password',
+                    placeholder: 'Please enter your password'
                 },
                 validation: {
-                    email: true
+                    required: true,
+                    password: true
                 },
                 valid: false,
                 touched: false,
@@ -46,7 +48,13 @@ class Login extends Component {
 
     }
 
-    updateForm = () => {
+    updateForm = (element) => {
+        const newFormdata = update(element,this.state.formdata,'login');
+
+        this.setState({
+            formError: false,
+            formdata: newFormdata
+        })
 
     }
 
@@ -60,8 +68,21 @@ class Login extends Component {
                         formdata = {this.state.formdata.email}
                         change = {(element) => this.updateForm(element)}
                         />
-                
+                    <FormField
+                        id={'password'}
+                        formdata={this.state.formdata.password}
+                        change={(element) => this.updateForm(element)}
+                    />
 
+                    {this.state.formError ?
+                        <div className="error_label">
+                            Please check your data
+                        </div>
+                    : null}
+
+                    <button onClick={(event) => this.submitForm(event)}>
+
+                    </button>
                 </form>
             </div>
         );
