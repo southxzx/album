@@ -15,28 +15,35 @@ export const validate = (element, formdata = []) => {
         error = !valid ? [valid,message] : error;
     }
 
-    return error;
+    return error; // Error là 1 mảng gồm 2 phần tử: bool + message
 
 }
 
 export const update = (element, formdata, formname) => {
 
+    // Chuyển data sang newForm
     const newFormdata = {
         ...formdata
     }
+    // ID của element: mail, password, name,...
     const newElement = {
         ...formdata[element.id]
     }
-
+    
+    // Lấy value
     newElement.value = element.event.target.value;
 
+    // Blur: Di chuyển chuột ra khỏi form => validate 
     if (element.blur) {
         let validData = validate(newElement, formdata);
+
+        // validData = [true,'message'] trả về từ error
         newElement.valid = validData[0];
         newElement.validationMessage = validData[1];
     }
 
     newElement.touched = element.blur;
+    // Update element
     newFormdata[element.id] = newElement;
 
     return newFormdata;
@@ -47,6 +54,7 @@ export const update = (element, formdata, formname) => {
 export const generateData =  (formdata, formname) => {
     let dataToSubmit = {};
 
+    // Đẩy data vào dataToSubmit dạng json
     for (let key in formdata){
         dataToSubmit[key] = formdata[key].value;
     }
