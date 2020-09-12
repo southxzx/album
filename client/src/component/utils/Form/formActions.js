@@ -15,6 +15,13 @@ export const validate = (element, formdata = []) => {
         error = !valid ? [valid,message] : error;
     }
 
+    //Check mật khẩu có khớp hay không
+    if(element.validation.confirm){
+        const valid = element.value.trim() === formdata[element.validation.confirm].value;
+        const message = `${!valid ? 'Passwords do not match!' : ''}`;
+        error = !valid ? [valid,message] : error;
+    }
+
     return error; // Error là 1 mảng gồm 2 phần tử: bool + message
 
 }
@@ -56,7 +63,10 @@ export const generateData =  (formdata, formname) => {
 
     // Đẩy data vào dataToSubmit dạng json
     for (let key in formdata){
-        dataToSubmit[key] = formdata[key].value;
+        if (key !== 'confirmPassword'){
+            dataToSubmit[key] = formdata[key].value;
+        }
+        
     }
 
     return dataToSubmit;
