@@ -3,17 +3,21 @@ import UserLayout from '../../hoc/userLayout';
 import MyButton from '../utils/button';
 
 
-const UserDashboard = () => {
+const UserDashboard = (user) => {
+    
+
+    console.log(user.user.userData.name);
+
     return (
-        <UserLayout>
-            <div>
+        <UserLayout> 
+            <div> 
                 
                 <div className="user_nfo_panel">
                     <h1>User information</h1>
                     <div>
-                        <span>name</span>
-                        <span>lastname</span>
-                        <span>email</span>
+                        <span>{user.user.userData.name}</span>
+                        <span>{user.user.userData.lastname}</span>
+                        <span>{user.user.userData.email}</span>
                     </div>
                     <MyButton
                         type="default"

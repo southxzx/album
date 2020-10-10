@@ -154,7 +154,7 @@ app.post('/api/users/register',async (req,res) => {
 });
 
 // Logout
-app.get('/api/user/logout',auth,(req,res) => {
+app.get('/api/users/logout',auth,(req,res) => {
     User.findOneAndUpdate(
         {_id: req.user._id},
         {token: ''},
