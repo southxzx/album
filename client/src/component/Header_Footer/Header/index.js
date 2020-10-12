@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import { logoutUser } from '../../../redux/actions/user_actions';
-
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 
 class Header extends Component {
 
@@ -41,10 +41,28 @@ class Header extends Component {
                 linkTo: '/user/logout',
                 public: false
             },
-        ]
+        ],
+        headerShow: false
+    }
+
+    showHeader = () => {
+        if(window.scrollY > 0){
+            this.setState({
+                headerShow: true
+            })
+       } else {
+            this.setState({
+                headerShow: false
+            })
+       }
+    }
+
+    componentDidMount = () => {
+        window.addEventListener('scroll',this.showHeader);
     }
 
     logoutHandler = () => {
+
         this.props.dispatch(logoutUser()).then(response => {
             if (response.payload.success){
                 // Component không thuộc React Router nên ko push đc
@@ -87,23 +105,26 @@ class Header extends Component {
             
             type.forEach((item)=>{
                 if (!this.props.user.userData.isAuth){
+                    // Nếu user không được Auth thì chỉ thêm LOG IN
                     if (item.public === true){
                         list.push(item);
                     }
                 } else {
+                    // Nếu được Auth thì thêm Tất cả
                     if (item.name !== 'Log In'){
                         list.push(item);
                     }
                 }
             });
-            return list.map((item,i)=>{
-                if(item.name !== 'My Cart'){
-                    return this.defaultLink(item,i);
-                } else{
-                    return this.cardLinks(item,i);
-                }
-            })
         }
+
+        return list.map((item,i)=>{
+            if(item.name !== 'My Cart'){
+                return this.defaultLink(item,i);
+            } else{
+                return this.cardLinks(item,i);
+            }
+        })
 
     }
 
@@ -111,23 +132,25 @@ class Header extends Component {
 
 
         return (
-            <header className="bck_b_light">
-                <div className="container">
-                    <div className="left">
-                        <div className="logo">
-                            ALBUM Co.
+                <header className={this.state.headerShow ? "bck_b_light" : ""}>
+                    <Toolbar>
+                    <div className="container">
+                        <div className="left">
+                            <div className="logo">
+                                ALBUM Co.
+                            </div>
+                        </div>
+                        <div className="right">
+                            <div className="top">
+                            {this.showLinks(this.state.user)}
+                            </div>
+                            <div className="bottom">
+                                {this.showLinks(this.state.page)}
+                            </div>
                         </div>
                     </div>
-                    <div className="right">
-                        <div className="top">
-                        {this.showLinks(this.state.user)}
-                        </div>
-                        <div className="bottom">
-                            {this.showLinks(this.state.page)}
-                        </div>
-                    </div>
-                </div>
-            </header>
+                    </Toolbar>
+                </header>
         );
     }
 }
