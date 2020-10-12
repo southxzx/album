@@ -194,8 +194,14 @@ app.post('/api/users/login',(req,res) => {
 
             // If true => Generate a token
                 token = jwt.sign({email: user.email, _id: user._id}, process.env.SECRET);
-                console.log(token);
-                user.token = token
+                user.token = token;
+                User.findByIdAndUpdate(
+                    {_id: user._id},
+                    {token: token},
+                    (err,doc) => {
+                        if (err) return res.json({success:false,err});
+                    }
+                )
                 res.cookie('w_auth',token).status(200).json({
                     loginSuccess: true
                 })

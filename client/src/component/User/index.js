@@ -6,7 +6,6 @@ import MyButton from '../utils/button';
 const UserDashboard = (user) => {
     
 
-    console.log(user.user.userData.name);
 
     return (
         <UserLayout> 

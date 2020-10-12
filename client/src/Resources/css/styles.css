@@ -1,7 +1,7 @@
 body {
     margin:0;
     padding:0;
-    font-family: 'Vollkorn', serif;
+    font-family: 'Playfair Display', serif;
     color: #404040;
 }
 
@@ -11,7 +11,6 @@ body {
 }
 .page_container {
     min-height: 75vh;
-    padding-top: 85px;
 }
 .main_loader {
     text-align: center;
@@ -28,7 +27,7 @@ a {
 }
 
 .bck_b_light {
-    background: #272723;
+    background:  #2727237a;
 }
 
 .bck_b_dark {
@@ -247,7 +246,6 @@ header {
     position: fixed;
     z-index: 999;
     width: 100%;
-    border-bottom: 1px solid white;
 }
 
 header .logo {
@@ -261,6 +259,10 @@ header a {
     margin-left: 20px;
 }
 
+header a:hover {
+    color: #1DB954
+}
+
 header .container {
     display: flex;
 }
@@ -271,8 +273,6 @@ header .container .left{
 
 header .container .right{
    flex-grow: 1;
-   border-left: 1px solid #eeeeee;
-   border-right: 1px solid #eeeeee;
 }
 header .container .right .top ,
 header .container .right .bottom {
@@ -286,7 +286,6 @@ header .container .right .bottom {
 
 header .container .right .top {
     color:#c9c9c9;
-    border-bottom: 1px solid #ffffff;
 }
 
 header .cart_link {
@@ -362,6 +361,26 @@ footer .business_nfo .nfo {
         FEATURED IMAGE
 ==============================*/
 
+
+.artist_name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);  
+    transform: translate(-50%, -50%);   
+    border: 2px solid white;
+}
+
+.artist_name .wrapper {
+    margin: 6px;
+    text-align: center;
+    color: #fff;
+    font-size: 40px;
+    padding: 21px 70px 21px 70px;
+    text-transform: uppercase;
+}
+
+
 .featured_container .featured_image {
     position:relative;
     background-size: cover !important;
@@ -375,9 +394,7 @@ footer .business_nfo .nfo {
 }
 
 .featured_container .featured_action .tag {
-    background: #82828287;
     color: #ffffff;
-    padding: 0px 20px;
     text-transform: uppercase;
     display: table;
 }
@@ -407,7 +424,7 @@ footer .business_nfo .nfo {
 
 
 .home_promotion .tag {
-    background: #82828287;
+    background: #00000070;
     color: #ffffff;
     padding: 0px 20px;
     text-transform: uppercase;
@@ -468,10 +485,11 @@ footer .business_nfo .nfo {
 
 .card_item_wrapper .image {
     width: 100%;
-    height: 280px;
+    height: 200px;
     background-position: center !important;
     background-size: cover !important;
     border: 1px solid #f0f0f0;
+    border-radius: 15px;
 }
 
 
@@ -490,7 +508,7 @@ footer .business_nfo .nfo {
 .card_item_wrapper .tags .brand {
     font-size: 17px;
     font-weight: 700;
-    color: #2196F3;
+    color: #161616;
 }
 
 .card_item_wrapper .tags .name {
