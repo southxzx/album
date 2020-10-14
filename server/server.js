@@ -47,7 +47,7 @@ app.post('/api/product/material',auth,admin,(req,res) => {
 })
 
 // Xem Materials
-app.get('/api/product/materials',auth,admin,(req,res) => {
+app.get('/api/product/materials',(req,res) => {
     Material.find({},(err,materials) => {
         if (err) return res.status(400).send(err);
         res.status(200).send(materials);
