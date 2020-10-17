@@ -62,6 +62,7 @@ export default class CollapseCheckbox extends Component {
 
         // Check vị trí của value._id trong mảng Checked[]
         const currentIndex = checked.indexOf(value);
+        
         const newChecked = [...checked];
 
         // Nếu ko có vị trí thì thêm value._id vào mảng mới

@@ -80,6 +80,55 @@ app.get('/api/product/genres',(req,res) => {
 
 /*----------------------------- PRODUCT --------------------------- */
 
+// VỚi GET TA DÙNG QUERY VÀ POST DÙNG BODY
+// VỚi GET TA DÙNG QUERY VÀ POST DÙNG BODY
+
+app.post('/api/product/shop',(req,res)=>{
+
+    let order = req.body.order ? req.body.order : 'desc';
+    let sortBy = req.body.sortBy ? req.query.sortBy: '_id';
+    let limit = req.body.limit ? parseInt(req.query.limit): 100;
+    let skip = parseInt(req.query.skip);
+    let findArgs = {};
+
+    for(let key in req.body.filters){
+        // Nếu 1 trong 4 fields rỗng thì bỏ qua
+        if(req.body.filters[key].length > 0){
+            if (key === 'price') {
+                findArgs[key]={
+                    //greater and equal = gte
+                    $gte: req.body.filters[key][0],
+                    $lte: req.body.filters[key][1]
+                }
+                
+            } else {
+                findArgs[key] = req.body.filters[key];
+            }
+        }
+    }
+
+    // Send request
+    console.log(findArgs);
+
+    Product.
+    find(findArgs).
+    populate('genre').
+    populate('material').
+    sort([[sortBy,order]]).
+    skip(skip).
+    limit(limit).
+    exec((err,articles)=>{
+        if (err) return res.status(400).send(err);
+        res.status(200).json({
+            size: articles.length,
+            articles
+        })
+    })
+
+})
+
+
+
 // By Arrival : article?sortBy=createdAt&order=desc&limit=4
 
 // By Sell : article?sortBy=sold&order=desc&limit=4

@@ -5,7 +5,8 @@ import {
     GET_PRODUCT_BY_SELL,
     GET_PRODUCT_BY_ARRIVAL,
     GET_GENRES,
-    GET_MATERIALS
+    GET_MATERIALS,
+    GET_PRODUCTS_TO_SHOP
 } from './types';
 
 export const getProductBySell = () => {
@@ -51,6 +52,28 @@ export function getMaterials(){
 
     return {
         type: GET_MATERIALS,
+        payload: request
+    }
+}
+
+export function getProductsToShop(skip,limit,filters = [],previousSate=[]){
+
+    const data = {
+        limit,
+        skip,
+        filters
+    };
+
+    const request = axios.post(`${PRODUCT_SERVER}/shop`,data)
+    .then(response => {
+        return{
+            size: response.data.size,
+            articles: response.data.articles
+        }
+    })
+
+    return{
+        type: GET_PRODUCTS_TO_SHOP,
         payload: request
     }
 }
