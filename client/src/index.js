@@ -17,14 +17,12 @@ import Reducer from './redux/reducers';
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,ReduxThunk)(createStore);
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={createStoreWithMiddleware(Reducer,
       window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
       <BrowserRouter>
         <Routes/>
       </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 
