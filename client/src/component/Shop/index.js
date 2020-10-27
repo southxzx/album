@@ -5,7 +5,7 @@ import CollapseCheckbox from '../utils/collapseCheckbox';
 import CollapseRadio from '../utils/collapseRadio';
 import { price, scores } from '../utils/Form/fixed_categories';
 import PageTop from '../utils/page_top';
-
+import LoadmoreCard from './loadmoreCard';
 
 
 class Shop extends Component {
@@ -123,7 +123,20 @@ class Shop extends Component {
                             
                         </div>
                         <div className="right">
-                            Right
+                            <div className="shop_options">
+                                <div className="shop_grids clear">
+                                    grids
+                                </div>
+                            </div>
+                            <div>
+                                <LoadmoreCard
+                                    grid={this.state.grid}
+                                    limit={this.state.limit}
+                                    size={product.toShopSize}
+                                    products={product.toShop}
+                                    loadMore={() => console.log('loadmore')}
+                                />
+                            </div>
                         </div>
                         
                     </div>
